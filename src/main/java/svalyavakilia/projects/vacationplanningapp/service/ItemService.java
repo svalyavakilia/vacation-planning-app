@@ -45,4 +45,35 @@ public class ItemService {
 
         return suitcase.get().addItem(item.get());
     }
+
+    public void markItemAsPacked(final int id) {
+        final Optional<Item> item = itemRepository.getItemById(id);
+
+        if (item.isPresent()) {
+            item.get().isPacked(true);
+        } else {
+            throw new NoSuchElementException("No item with id " + id + "!");
+        }
+    }
+
+    public boolean removeItemFromSuitcase(final int itemId,
+                                          final int suitcaseId) {
+        final Optional<Item> item = itemRepository.getItemById(itemId);
+
+        if (item.isEmpty()) {
+            throw new NoSuchElementException("No item with id " + itemId + "!");
+        }
+
+        final Optional<Suitcase> suitcase = suitcaseRepository.getSuitcaseById(
+            suitcaseId
+        );
+
+        if (suitcase.isEmpty()) {
+            throw new NoSuchElementException(
+                "No suitcase with id " + suitcaseId + "!"
+            );
+        }
+
+        return suitcase.get().removeItem(item.get());
+    }
 }

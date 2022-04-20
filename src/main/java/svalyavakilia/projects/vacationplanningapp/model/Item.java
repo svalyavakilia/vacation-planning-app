@@ -2,19 +2,20 @@ package svalyavakilia.projects.vacationplanningapp.model;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class Item {
     private static int nextItemId = 0;
     private static final Map<Integer, Item> ITEMS = new HashMap<>();
 
+    private final int id;
     private String name;
     private int quantity;
     private boolean isPacked;
 
     {
-        ITEMS.put((nextItemId)++, this);
+        id = (nextItemId)++;
+
+        ITEMS.put(this.id, this);
     }
 
     public Item(final String name,
@@ -27,6 +28,10 @@ public class Item {
 
     public static Map<Integer, Item> getItems() {
         return ITEMS;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public void setName(final String name) {
@@ -51,5 +56,19 @@ public class Item {
 
     public boolean isPacked() {
         return this.isPacked;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (object instanceof Item that) {
+            return this.id == that.id;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 }

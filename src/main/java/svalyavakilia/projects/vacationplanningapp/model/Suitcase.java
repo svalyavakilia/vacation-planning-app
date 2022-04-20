@@ -46,7 +46,7 @@ public class Suitcase {
     }
 
     public boolean removeItem(final Item item) {
-        return items.remove(item);
+        return this.items.remove(item);
     }
 
     public int getId() {
